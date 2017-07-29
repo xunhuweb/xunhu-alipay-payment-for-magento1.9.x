@@ -1,6 +1,6 @@
 <?php
 
-class Alipay_Payment_Helper_Data extends Mage_Core_Helper_Abstract
+class Wpopalipay_Payment_Helper_Data extends Mage_Core_Helper_Abstract
 {
 
     /**
@@ -15,7 +15,7 @@ class Alipay_Payment_Helper_Data extends Mage_Core_Helper_Abstract
             $storeId = Mage::app()->getStore()->getStoreId();
         }
         
-        return trim(Mage::getStoreConfig("payment/alipay/$code", $storeId));
+        return trim(Mage::getStoreConfig("payment/wpopalipay/$code", $storeId));
     }
 
     /**

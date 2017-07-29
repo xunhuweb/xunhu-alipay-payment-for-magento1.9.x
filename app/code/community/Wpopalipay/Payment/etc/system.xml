@@ -3,7 +3,7 @@
 	<sections>
 		<payment>
 			<groups>
-				<alipay translate="label" module="alipay">
+				<wpopalipay translate="label" module="wpopalipay">
 					<label>Alipay Payment Settings</label>
 					<frontend_type>text</frontend_type>
 					<sort_order>0</sort_order>
@@ -77,7 +77,7 @@
                             <show_in_store>0</show_in_store>
                         </sort_order>
 					</fields>
-				</alipay>
+				</wpopalipay>
 			</groups>
 		</payment>
 	</sections>

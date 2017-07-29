@@ -1,9 +1,9 @@
 <?php
 
-class Alipay_Payment_Model_Alipay extends Mage_Payment_Model_Method_Abstract {
-    protected $_code          = 'alipay';
-    protected $_formBlockType = 'alipay/form';
-    protected $_infoBlockType = 'alipay/info';
+class Wpopalipay_Payment_Model_Wpopalipay extends Mage_Payment_Model_Method_Abstract {
+    protected $_code          = 'wpopalipay';
+    protected $_formBlockType = 'wpopalipay/form';
+    protected $_infoBlockType = 'wpopalipay/info';
     protected $_order;
 
     /**
@@ -24,7 +24,7 @@ class Alipay_Payment_Model_Alipay extends Mage_Payment_Model_Method_Abstract {
     }
 
     public function getOrderPlaceRedirectUrl() {
-        return Mage::getUrl('alipay/redirect', array('_secure' => true));
+        return Mage::getUrl('wpopalipay/redirect', array('_secure' => true));
     }
 
     /**

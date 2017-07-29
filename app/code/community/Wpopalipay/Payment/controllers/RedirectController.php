@@ -1,13 +1,13 @@
 <?php
 
-class Alipay_Payment_RedirectController extends Mage_Core_Controller_Front_Action {
+class Wpopalipay_Payment_RedirectController extends Mage_Core_Controller_Front_Action {
 
-//     protected function _expireAjax() {
-//         if (!Mage::getSingleton('checkout/session')->getQuote()->hasItems()) {
-//             $this->getResponse()->setHeader('HTTP/1.1','403 Session Expired');
-//             exit;
-//         }
-//     }
+    protected function _expireAjax() {
+        if (!Mage::getSingleton('checkout/session')->getQuote()->hasItems()) {
+            $this->getResponse()->setHeader('HTTP/1.1','403 Session Expired');
+            exit;
+        }
+    }
     
 //     protected function _getCheckout()
 //     {
@@ -15,13 +15,13 @@ class Alipay_Payment_RedirectController extends Mage_Core_Controller_Front_Actio
 //     }
 
     public function indexAction() {
-    	$order = Mage::helper('alipay')->getOrder();
+    	$order = Mage::helper('wpopalipay')->getOrder();
     	if(!in_array($order->getState(), array(
     	    Mage_Sales_Model_Order::STATE_NEW,
     	    Mage_Sales_Model_Order::STATE_PENDING_PAYMENT
     	     
     	))){
-    	    $this->_redirectUrl(Mage::getUrl('alipay/redirect/success', array('transaction_id' => $order->getRealOrderId())));
+    	    $this->_redirectUrl(Mage::getUrl('wpopalipay/redirect/success', array('transaction_id' => $order->getRealOrderId())));
     	    return;
     	}
     	if(!($order&&$order instanceof Mage_Sales_Model_Order)){
@@ -29,7 +29,7 @@ class Alipay_Payment_RedirectController extends Mage_Core_Controller_Front_Actio
     	}
     	
     	$payment =$order->getPayment();
-    	if( $payment->getMethod()!='alipay'){
+    	if( $payment->getMethod()!='wpopalipay'){
     	    throw new Exception('unknow order payment method');
     	}
     	
@@ -37,7 +37,7 @@ class Alipay_Payment_RedirectController extends Mage_Core_Controller_Front_Actio
     	$website=$protocol.$_SERVER['HTTP_HOST'];
     	
     	$total_amount     = round($order->getGrandTotal(),2);
-    	$helper =Mage::helper('alipay');
+    	$helper =Mage::helper('wpopalipay');
     	
     	$data=array(
     	    'version'   => '1.1',//api version
@@ -51,7 +51,7 @@ class Alipay_Payment_RedirectController extends Mage_Core_Controller_Front_Actio
     	    'title'     => $helper->get_order_title($order),
     	    'description'=> $helper->get_order_desc($order),
     	    'time'      => time(),
-    	    'notify_url'=> Mage::getUrl('alipay/notify'),
+    	    'notify_url'=> Mage::getUrl('wpopalipay/notify'),
     	    'return_url'=> Mage::getUrl('customer/account'),
     	    'callback_url'=>Mage::getUrl('checkout/cart'),
     	    'nonce_str' => str_shuffle(time())
@@ -87,11 +87,11 @@ class Alipay_Payment_RedirectController extends Mage_Core_Controller_Front_Actio
         	 <!DOCTYPE html>
         	    <html>
         	    <head>
-        	    	<title><?php print $helper->__('Redirect to alipay ...')?></title>
+        	    	<title><?php print $helper->__('Redirect to wpopalipay ...')?></title>
         	    </head>
         	    <body>
                 	<?php 
-            	    print $helper->__('Redirect to alipay ...');
+            	    print $helper->__('Redirect to wpopalipay ...');
             	    ?>
     	    		<script type="text/javascript">location.href="<?php print $result['url'];?>";</script>
         	 </body>

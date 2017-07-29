@@ -1,13 +1,13 @@
 <?php
 
-class Alipay_Payment_Block_Form extends Mage_Payment_Block_Form
+class Wpopalipay_Payment_Block_Form extends Mage_Payment_Block_Form
 {
 
     protected function _construct()
     {
         parent::_construct();
         
-        $this->setTemplate('alipay/form.phtml');
+        $this->setTemplate('wpopalipay/form.phtml');
         $this->setMethodTitle('');
     }
 
@@ -16,9 +16,9 @@ class Alipay_Payment_Block_Form extends Mage_Payment_Block_Form
         if (! $this->hasData('_method_label_html')) {
             $code = $this->getMethod()->getCode();
             $labelBlock = Mage::app()->getLayout()->createBlock('core/template', null, array(
-                'template' => 'alipay/payment/payment_method_label.phtml',
-                'payment_method_icon' => $this->getSkinUrl("images/alipay/logo.png"),
-                'payment_method_label' => Mage::helper('alipay')->getConfigData('title'),
+                'template' => 'wpopalipay/payment/payment_method_label.phtml',
+                'payment_method_icon' => $this->getSkinUrl("images/wpopalipay/logo.png"),
+                'payment_method_label' => Mage::helper('wpopalipay')->getConfigData('title'),
                 'payment_method_class' => $code
             ));
             

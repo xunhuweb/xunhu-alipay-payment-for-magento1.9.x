@@ -1,0 +1,97 @@
+<?xml version="1.0"?>
+
+<config>
+	<modules>
+		<Wpopalipay_Payment>
+			<version>1.0.0</version>
+		</Wpopalipay_Payment>
+	</modules>
+
+	<global>
+		<models>
+			<wpopalipay>
+				<class>Wpopalipay_Payment_Model</class>
+			</wpopalipay>
+		</models>
+
+		<blocks>
+			<wpopalipay>
+				<class>Wpopalipay_Payment_Block</class>
+			</wpopalipay>
+		</blocks>
+
+		<resources>
+			<wpopalipay_setup>
+				<setup>
+					<module>Wpopalipay_Payment</module>
+				</setup>
+				<connection>
+					<use>core_setup</use>
+				</connection>
+			</wpopalipay_setup>
+			<wpopalipay_write>
+				<connection>
+					<use>core_write</use>
+				</connection>
+			</wpopalipay_write>
+			<wpopalipay_read>
+				<connection>
+					<use>core_read</use>
+				</connection>
+			</wpopalipay_read>
+		</resources>
+		<helpers>
+			<wpopalipay>
+				<class>Wpopalipay_Payment_Helper</class>
+			</wpopalipay>
+		</helpers>
+	</global>
+
+
+	<frontend>
+		<routers>
+			<wpopalipay>
+				<use>standard</use>
+				<args>
+					<module>Wpopalipay_Payment</module>
+					<frontName>wpopalipay</frontName>
+				</args>
+			</wpopalipay>
+		</routers>
+		<translate>
+			<modules>
+				<Wpopalipay_Payment>
+					<files>
+						<default>Wpopalipay_Payment.csv</default>
+					</files>
+				</Wpopalipay_Payment>
+			</modules>
+		</translate>
+	</frontend>
+
+
+	<adminhtml>
+		<translate>
+			<modules>
+				<Wpopalipay_Payment>
+					<files>
+						<default>Wpopalipay_Payment.csv</default>
+					</files>
+				</Wpopalipay_Payment>
+			</modules>
+		</translate>
+	</adminhtml>
+
+	<default>
+		<payment>
+			<wpopalipay>
+				<active>0</active>
+				<model>wpopalipay/wpopalipay</model>
+				<title>Alipay Payment</title>
+				<description>You will be redirected to alipay Payment when you place an order.</description>
+				<transaction_url>https://pay.wordpressopen.com</transaction_url>
+				<sort_order>0</sort_order>
+			</wpopalipay>
+		</payment>
+	</default>
+</config>
