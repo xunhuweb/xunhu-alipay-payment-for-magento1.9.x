@@ -1,19 +1,19 @@
 <layout version="0.1.0">
     <sales_order_history>
         <reference name="sales.order.history">
-            <action method="setTemplate"><template>royalpay/sales/order/history.phtml</template></action>
+            <action method="setTemplate"><template>wpopalipay/sales/order/history.phtml</template></action>
         </reference>
     </sales_order_history>
     
     <customer_account_index>
         <reference name="customer_account_dashboard_top">
-            <action method="setTemplate"><template>royalpay/sales/order/recent.phtml</template></action>
+            <action method="setTemplate"><template>wpopalipay/sales/order/recent.phtml</template></action>
         </reference>
     </customer_account_index>    
 
     <sales_order_view>
         <reference name="sales.order.info.buttons">
-            <action method="setTemplate"><template>royalpay/sales/order/info/buttons.phtml</template></action>
+            <action method="setTemplate"><template>wpopalipay/sales/order/info/buttons.phtml</template></action>
         </reference>
     </sales_order_view>
 </layout>
