@@ -15,7 +15,15 @@ class Wpopalipay_Payment_RedirectController extends Mage_Core_Controller_Front_A
 //     }
 
     public function indexAction() {
-    	$order = Mage::helper('wpopalipay')->getOrder();
+        $orderId = $this->getRequest()->get('orderId');
+        if ($orderId) {
+            $order = Mage::getModel('sales/order')->loadByIncrementId($orderId);
+        } else {
+            $order = Mage::helper('wpopalipay')->getOrder();
+        }
+        
+        $order_id =$order->getRealOrderId();
+        
     	if(!in_array($order->getState(), array(
     	    Mage_Sales_Model_Order::STATE_NEW,
     	    Mage_Sales_Model_Order::STATE_PENDING_PAYMENT
@@ -52,7 +60,7 @@ class Wpopalipay_Payment_RedirectController extends Mage_Core_Controller_Front_A
     	    'description'=> $helper->get_order_desc($order),
     	    'time'      => time(),
     	    'notify_url'=> Mage::getUrl('wpopalipay/notify'),
-    	    'return_url'=> Mage::getUrl('customer/account'),
+    	    'return_url'=>Mage::getUrl('wpopalipay/redirect/success', array('orderId' => $order_id)),
     	    'callback_url'=>Mage::getUrl('checkout/cart'),
     	    'nonce_str' => str_shuffle(time())
     	);
@@ -100,7 +108,6 @@ class Wpopalipay_Payment_RedirectController extends Mage_Core_Controller_Front_A
     	    
     	} catch (Exception $e) {
     	    ?>
-    	 <!DOCTYPE html>
     	    <html>
     	    <head>
     	    	<title><?php print $helper->__('Ops!Something is wrong.')?></title>
@@ -115,6 +122,30 @@ class Wpopalipay_Payment_RedirectController extends Mage_Core_Controller_Front_A
     	}
     	
     	exit;
+    }
+    
+    protected function _getCheckout()
+    {
+        return Mage::getSingleton('checkout/session');
+    }
+    public function successAction() {
+        $orderId = $this->getRequest()->get('orderId');
+        if ($orderId) {
+            $order = Mage::getModel('sales/order')->loadByIncrementId($orderId);
+            if($order){
+                 
+                $session = Mage::getSingleton('checkout/session');
+                 
+                $session->setLastSuccessQuoteId($order->getQuoteId())
+                ->setLastQuoteId($order->getQuoteId())
+                ->addSuccess(Mage::helper('wpopalipay')->__('Your Payment was Successful!'))
+                ->setLastOrderId($order->getId())
+                ->setLastRealOrderId($order->getIncrementId());
+                $session->getQuote()->setIsActive(false)->save();
+            }
+        }
+    
+        $this->_redirect('checkout/onepage/success', array('_secure'=>true));
     }
 }
 ?>

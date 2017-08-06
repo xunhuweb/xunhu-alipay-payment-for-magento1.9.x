@@ -3,9 +3,18 @@
 class Wpopalipay_Payment_Model_Wpopalipay extends Mage_Payment_Model_Method_Abstract {
     protected $_code          = 'wpopalipay';
     protected $_formBlockType = 'wpopalipay/form';
-    protected $_infoBlockType = 'wpopalipay/info';
+    //protected $_infoBlockType = 'wpopalipay/info';
     protected $_order;
 
+    protected $_isGateway               = false;
+    protected $_canAuthorize            = true;
+    protected $_canCapture              = true;
+    protected $_canVoid                 = false;
+    protected $_canUseInternal          = false;
+    protected $_canUseCheckout          = true;
+    protected $_canUseForMultishipping  = false;
+    protected $_canRefund               = false;
+    
     /**
      * Get order model
      *
@@ -22,25 +31,19 @@ class Wpopalipay_Payment_Model_Wpopalipay extends Mage_Payment_Model_Method_Abst
     public function getCheckout() {
         return Mage::getSingleton('checkout/session');
     }
-
+  
     public function getOrderPlaceRedirectUrl() {
         return Mage::getUrl('wpopalipay/redirect', array('_secure' => true));
     }
-
-    /**
-     * Method that will be executed instead of authorize or capture
-     * if flag isInitializeNeeded set to true
-     *
-     * @param string $paymentAction
-     * @param Mage_Sales_Model_Order $stateObject
-     *
-     * @return Mage_Payment_Model_Abstract
-     */
-    public function initialize($paymentAction, $stateObject)
+    
+    public function capture(Varien_Object $payment, $amount)
     {
-        $state = Mage_Sales_Model_Order::STATE_PENDING_PAYMENT;
-        $stateObject->setState($state);
-        $stateObject->setStatus($state);
-        $stateObject->setIsNotified(false);
+        $payment->setStatus(self::STATUS_APPROVED)->setLastTransId($this->getTransactionId());
+    
+        return $this;
+    }
+    
+    public function getRepayUrl($order){
+        return Mage::getUrl('wpopalipay/redirect', array('_secure' => true,'orderId'=>$order->getRealOrderId()));
     }
 }

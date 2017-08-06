@@ -45,6 +45,17 @@
 				<class>Wpopalipay_Payment_Helper</class>
 			</wpopalipay>
 		</helpers>
+		<events>
+			<sales_model_service_quote_submit_success>
+				<observers>
+					<wpopalipay_sales_model_service_quote_submit_success>
+							<type>singleton</type>
+							<class>Wpopalipay_Payment_Model_Observer</class>
+							<method>sales_model_service_quote_submit_success</method>
+					</wpopalipay_sales_model_service_quote_submit_success>
+				</observers>
+			</sales_model_service_quote_submit_success>
+		</events>
 	</global>
 
 
@@ -67,6 +78,13 @@
 				</Wpopalipay_Payment>
 			</modules>
 		</translate>
+		<layout>
+            <updates>
+                <royalpay>
+                    <file>wpopalipay/layout.xml</file>
+                </royalpay>
+            </updates>
+        </layout>
 	</frontend>
 
 
@@ -88,6 +106,7 @@
 				<active>0</active>
 				<model>wpopalipay/wpopalipay</model>
 				<title>Alipay Payment</title>
+				<order_status>pending</order_status>
 				<description>You will be redirected to alipay Payment when you place an order.</description>
 				<transaction_url>https://pay.wordpressopen.com</transaction_url>
 				<sort_order>0</sort_order>
