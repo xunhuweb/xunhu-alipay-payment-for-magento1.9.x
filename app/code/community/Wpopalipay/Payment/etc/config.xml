@@ -108,7 +108,7 @@
 				<title>Alipay Payment</title>
 				<order_status>pending</order_status>
 				<description>You will be redirected to alipay Payment when you place an order.</description>
-				<transaction_url>https://pay.wordpressopen.com</transaction_url>
+				<transaction_url>https://pay2.xunhupay.com/v2</transaction_url>
 				<sort_order>0</sort_order>
 			</wpopalipay>
 		</payment>
